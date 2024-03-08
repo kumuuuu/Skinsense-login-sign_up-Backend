@@ -1,5 +1,5 @@
 //mongoDB
-require('./../Skin Sense Backend/config/db.js')
+require('./../Skin Sense Backend/config/db')
 
 const app = require ('express')();
 const port = process.env.PORT || 3000;
