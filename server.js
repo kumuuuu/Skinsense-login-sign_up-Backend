@@ -1,10 +1,10 @@
 //mongoDB
-require('./../Skin Sense Backend/config/db')
+require('./config/db');
 
 const app = require ('express')();
 const port = process.env.PORT || 3000;
 
-const UserRouter = require('./../Skin Sense Backend/api/User')
+const UserRouter = require('./api/User');
 
 //for accepting post from data
 const bodyParser = require('express').json;
