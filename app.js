@@ -2,7 +2,12 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 
-const mongoUrl = "database key";
+require("dotenv").config();
+const mongoUrl = process.env.MONGODB_URI;
+
+if (!mongoUrl) {
+  throw new Error("MONGODB_URI environment variable is not set.");
+}
 
 mongoose
   .connect(mongoUrl)

@@ -11,11 +11,12 @@ Provide a backend service that can register users and authenticate logins with s
 - Configures database connection via environment variables.
 
 # Technical Architecture
-- `server.js` initializes the Express app, JSON body parsing, and mounts `/user` routes.
-- `config/db.js` loads environment variables and connects to MongoDB with Mongoose.
-- `models/User.js` defines the user schema (name, email, password).
+- `server.js` initializes the Express app, loads `config/db.js` for MongoDB connection, and mounts `/user` routes.
+- `config/db.js` loads environment variables and connects to MongoDB with Mongoose for `server.js`.
+- `models/User.js` defines the user schema (name, email, password stored as a hash).
 - `api/User.js` implements signup/signin logic, validation, and bcrypt hashing.
-- `app.js` includes a minimal health check server with a hardcoded MongoDB connection.
+- `app.js` is a minimal entry point that connects to MongoDB directly (without `config/db.js`) and defines a root status endpoint.
+- Only `server.js` mounts the `/user` routes; use it when you need signup/signin functionality.
 
 # Key Features
 - User signup with name/email/password validation.
@@ -42,14 +43,19 @@ Provide a backend service that can register users and authenticate logins with s
    ```bash
    MONGODB_URI=your_mongodb_connection_string
    ```
-3. Run the API server:
+   Example:
+   ```bash
+   MONGODB_URI=mongodb://localhost:27017/skinsense
+   ```
+3. Run the full API server (signup/signin routes):
    ```bash
    node server.js
    ```
-   The default start script runs `app.js` via:
+   The default start script runs `app.js` (root status endpoint only) via:
    ```bash
    npm start
    ```
+   Update `package.json` if you want `npm start` to run `server.js`.
 
 # Challenges Faced
 - Implementing consistent input validation for signup and signin.
